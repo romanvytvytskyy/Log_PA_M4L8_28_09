@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'subjects',
     'events',
     'portfolios',
+    'core',
 ]
 
 MIDDLEWARE = [
