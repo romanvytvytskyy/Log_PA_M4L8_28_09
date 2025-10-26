@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Poll, Option
-from django.urls import reverese, reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.http import HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -51,7 +51,7 @@ class PollDeleteView(StaffRequiredMixin, DeleteView):
 
 def vote(request, pk):
     poll = get_object_or_404(Poll, pk=pk)
-    if request.user in poll.voted_user.all():
+    if request.user in poll.voted_users.all():
         return HttpResponseForbidden(
              "Ви вже залишили свій відгук"
              )
@@ -63,7 +63,7 @@ def vote(request, pk):
     else:
         selected_option.votes += 1
         selected_option.save()
-        poll.voted_user.add(request.user)
+        poll.voted_users.add(request.user)
         
         return redirect('poll-results', pk=pk)
     
