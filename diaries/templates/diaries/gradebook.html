@@ -1,0 +1,44 @@
+{% load diary_tags %}
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Електронний щоденник</h1>
+
+{% if user.is_authenticated and user.profile.role == 'admin' %}
+    <a href="{% url 'grade-add' %}">Додати оцінку</h1>    
+{% endif %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+          }
+    </style>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Студент</th>
+                
+                {% for subject in subjects %}
+                    <th>{{subject.name}}</th>
+                {% endfor %}
+                    
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for student in subjects %}
+                <tr>
+                    <td>{{student.username}}</td>
+                    {% for subject in subjects %}
+                        <td>
+                            {{grade_data|get_item:student.username|get_item:subject.name|join:", "}}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+    
