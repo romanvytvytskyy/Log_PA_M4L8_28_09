@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'events',
     'portfolios',
     'core',
+    'polls',
 ]
 
 MIDDLEWARE = [
